@@ -3,6 +3,7 @@ package com.gmhapp.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.gmhapp.entities.ProductEntity;
 import com.gmhapp.message.ResponseMessage;
 import com.gmhapp.model.FileInfo;
 import com.gmhapp.services.FilesStorageService;
@@ -33,11 +34,12 @@ public class FilesController {
         this.storageService = storageService;
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,
+                                                      @PathVariable ("id") int id) {
         String message = "";
         try {
-            storageService.save(file);
+            storageService.save(file,id);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {

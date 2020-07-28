@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 
+import com.gmhapp.entities.ProductEntity;
+import com.gmhapp.repositories.ProductRepository;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class FilesStorageServiceImpl implements FilesStorageService{
 
     private final Path root = Paths.get("uploads/product");
+
+    public final ProductService service;
+
+    public FilesStorageServiceImpl(ProductService service){
+        this.service = service;
+    }
 
     @Override
     public void init(){
@@ -31,13 +39,15 @@ public class FilesStorageServiceImpl implements FilesStorageService{
         }
     }
 
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, int pid){
+       ProductEntity productEntity = service.getProductById(pid);
        String mimeType = file.getContentType();
        if (mimeType.equals("image/jpg")||
            mimeType.equals("image/jpeg")||
            mimeType.equals("image/png")){
            try {
-               Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+               Files.copy(file.getInputStream(), this.root.resolve(productEntity.getId()
+                       +file.getContentType()));
            } catch (Exception e) {
                throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
            }
