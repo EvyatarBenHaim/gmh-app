@@ -44,7 +44,6 @@ public class ProductService {
         logger.debug("Product ID: "+productId+" added successfully to" +
                 " user id "+userId+ " favorites list." );
         repository.save(productEntity);
-
     }
 
     public List<ProductEntity> saveProducts(List<ProductEntity> products){
@@ -59,7 +58,6 @@ public class ProductService {
         List<ProductCategory> categories = Arrays.asList(ProductCategory.values());
         logger.info("Get products categories successfully: " + categories);
         return categories;
-
     }
 
     public ProductEntity getProductById(int id){

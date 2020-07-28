@@ -80,7 +80,6 @@ public class UserService {
         existingUserEntity.setAddress(userEntity.getAddress());
         existingUserEntity.setPhoneNum(userEntity.getPhoneNum());
         existingUserEntity.setEmail(userEntity.getEmail());
-        existingUserEntity.setDateOfBirth(userEntity.getDateOfBirth());
         existingUserEntity.getProductList().addAll(userEntity.getProductList());
         logger.debug("User id "+userEntity.getId()+" successfully updated.");
         return repository.save(existingUserEntity);
