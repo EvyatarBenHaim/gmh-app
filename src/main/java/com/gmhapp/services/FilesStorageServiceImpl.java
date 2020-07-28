@@ -25,9 +25,12 @@ public class FilesStorageServiceImpl implements FilesStorageService{
     private final Path root = Paths.get("uploads/product");
 
     public final ProductRepository repository;
+    public final ProductService service;
 
-    public FilesStorageServiceImpl(ProductRepository repository){
+
+    public FilesStorageServiceImpl(ProductRepository repository, ProductService service){
         this.repository = repository;
+        this.service = service;
     }
 
     @Override
@@ -44,13 +47,16 @@ public class FilesStorageServiceImpl implements FilesStorageService{
     public void save(MultipartFile file, int pid){
        if(!repository.existsById(pid))
            throw new ApiException("Id not found:", HttpStatus.NOT_FOUND);
-
+       ProductEntity productEntity = service.getProductById(pid);
        String mimeType = file.getContentType();
        if (mimeType.equals("image/jpg")||
            mimeType.equals("image/jpeg")||
            mimeType.equals("image/png")){
            try {
-               Files.copy(file.getInputStream(), this.root.resolve(pid+"."+mimeType.substring(6)));
+               String picName = pid+"."+mimeType.substring(6);
+               Files.copy(file.getInputStream(), this.root.resolve(picName));
+               productEntity.setPictureLink(picName);
+               repository.save(productEntity);
            } catch (Exception e) {
                throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
            }
