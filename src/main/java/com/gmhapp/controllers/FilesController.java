@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 
 @Controller
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin("http://localhost:4200")
 public class FilesController {
 
     final FilesStorageService storageService;
