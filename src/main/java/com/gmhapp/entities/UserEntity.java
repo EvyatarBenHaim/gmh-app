@@ -3,6 +3,7 @@ package com.gmhapp.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,13 +21,11 @@ public class UserEntity {
     private String address;
     private String phoneNum;
     private String email;
-    private String dateOfBirth;
     @JsonManagedReference
     @OneToMany(mappedBy = "userEntity" , targetEntity = ProductEntity.class, cascade = CascadeType.ALL)
     private List<ProductEntity> productList;
     @ManyToMany(mappedBy = "users")
     private List<ProductEntity> favoritesList;
-
 
     public UserEntity() {
     }
@@ -95,14 +94,6 @@ public class UserEntity {
         this.email = emailAddress;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public List<ProductEntity> getProductList() {
         return productList;
     }
@@ -132,13 +123,12 @@ public class UserEntity {
                 Objects.equals(address, userEntity.address) &&
                 Objects.equals(phoneNum, userEntity.phoneNum) &&
                 Objects.equals(email, userEntity.email) &&
-                Objects.equals(dateOfBirth, userEntity.dateOfBirth) &&
                 Objects.equals(productList, userEntity.productList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, fName, lName, address, phoneNum, email, dateOfBirth, productList);
+        return Objects.hash(id, userName, password, fName, lName, address, phoneNum, email, productList);
     }
 
     @Override
@@ -152,7 +142,6 @@ public class UserEntity {
                 ", address='" + address + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
                 ", emailAddress='" + email + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", productList=" + productList +
                 '}';
     }

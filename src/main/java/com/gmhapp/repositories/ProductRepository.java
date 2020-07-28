@@ -18,4 +18,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     @Query("SELECT p FROM ProductEntity p WHERE p.category = :category")
     List<ProductEntity> findAllByCategory(@Param("category") ProductCategory category);
 
+    boolean existsByName(String name);
+
 }

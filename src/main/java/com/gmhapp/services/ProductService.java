@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +21,6 @@ public class ProductService {
     private final UserService userService;
     private final ProductRepository repository;
     private final static Logger logger = Logger.getLogger(ProductService.class.getName());
-
 
     @Autowired
     public ProductService(ProductRepository repository,UserService userService)
@@ -31,6 +32,7 @@ public class ProductService {
     public ProductEntity saveProduct(ProductEntity product , int uesrId){
         UserEntity userEntity = userService.getUserById(uesrId);
         product.setUserEntity(userEntity);
+        product.setDateAdded(Calendar.getInstance().getTime());
         logger.debug("Product ID: "+product.getId()+" added successfully.");
         return repository.save(product);
     }
@@ -39,6 +41,8 @@ public class ProductService {
         UserEntity userEntity = userService.getUserById(userId);
         ProductEntity productEntity = getProductById(productId);
         productEntity.getUsers().add(userEntity);
+        logger.debug("Product ID: "+productId+" added successfully to" +
+                " user id "+userId+ " favorites list." );
         repository.save(productEntity);
 
     }
@@ -51,6 +55,13 @@ public class ProductService {
         return repository.findAll();
     }
 
+    public List<ProductCategory> getAllCategories(){
+        List<ProductCategory> categories = Arrays.asList(ProductCategory.values());
+        logger.info("Get products categories successfully: " + categories);
+        return categories;
+
+    }
+
     public ProductEntity getProductById(int id){
         ProductEntity productEntity =  repository.findById(id).orElse(null);
         if(Objects.isNull(productEntity))
@@ -59,11 +70,14 @@ public class ProductService {
     }
 
     public List<ProductEntity> getAllProductsByName(String name){
-        return repository.findAllByName(name);
+        if(repository.existsByName(name))
+           return repository.findAllByName(name);
+        throw new ApiException("name not found.",HttpStatus.NOT_FOUND);
     }
 
     public List<ProductEntity> getAllProductsByCategory(ProductCategory category){
-        /******** insert check********/
+        if(ProductCategory.getProductCategory(category.toString())==null)
+            throw new ApiException("category not found.",HttpStatus.NOT_FOUND);
         return repository.findAllByCategory(category);
     }
 

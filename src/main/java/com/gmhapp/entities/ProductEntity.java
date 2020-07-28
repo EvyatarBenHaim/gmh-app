@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +22,7 @@ public class ProductEntity {
     private String location;
     private String pictureLink;
     private String additionalComments;
+    private Date dateAdded;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "u_fk", referencedColumnName = "id" )
@@ -89,6 +91,14 @@ public class ProductEntity {
 
     public void setPictureLink(String pictureLink) {
         this.pictureLink = pictureLink;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date date) {
+        this.dateAdded= date;
     }
 
     public String getAdditionalComments() {
