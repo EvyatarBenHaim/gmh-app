@@ -35,15 +35,37 @@ public class ProductController {
         service.addToFavorites(productId,userId);
     }
 
+    @PostMapping("/removeFromFavorites/{productId}/{userId}")
+    public void removeFromFavorites(@PathVariable int productId,
+                               @PathVariable int userId){
+        service.removeFromFavorites(productId,userId);
+    }
+
     @GetMapping("/products")
     public List<ProductEntity> findAllProducts(){
         return service.getProducts();
+    }
+
+    @GetMapping("/categories")
+    public List<ProductCategory> getAllCategories(){
+        return service.getAllCategories();
     }
 
     @GetMapping("/products/{id}")
     public ProductEntity findProductById(@PathVariable int id){
         return service.getProductById(id);
     }
+
+    @GetMapping("/myProducts/{userId}")
+    public List<ProductEntity> findMyProductById(@PathVariable int userId){
+        return service.getUserProducts(userId);
+    }
+
+    @GetMapping("/myFavorites/{userId}")
+    public List<ProductEntity> findMyFavoritesById(@PathVariable int userId){
+        return service.getUserFavorites(userId);
+    }
+
 
     @GetMapping("/products/byName")
     public List<ProductEntity> findProductsByName(@RequestParam("name") String name){

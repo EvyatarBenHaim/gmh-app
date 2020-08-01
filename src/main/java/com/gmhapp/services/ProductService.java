@@ -46,6 +46,15 @@ public class ProductService {
         repository.save(productEntity);
     }
 
+    public void removeFromFavorites(int productId ,int userId) {
+        UserEntity userEntity = userService.getUserById(userId);
+        ProductEntity productEntity = getProductById(productId);
+        productEntity.getUsers().remove(userEntity);
+        logger.debug("Product ID: "+productId+" added successfully to" +
+                " user id "+userId+ " favorites list." );
+        repository.save(productEntity);
+    }
+
     public List<ProductEntity> saveProducts(List<ProductEntity> products){
         return repository.saveAll(products);
     }
@@ -102,4 +111,11 @@ public class ProductService {
         throw new ApiException("The productId not found , the ID is:"+product.getId(), HttpStatus.NOT_FOUND);
     }
 
+    public List<ProductEntity> getUserProducts(int userId) {
+        return userService.getUserById(userId).getProductList();
+    }
+
+    public List<ProductEntity> getUserFavorites(int userId) {
+        return userService.getUserById(userId).getFavoritesList();
+    }
 }
