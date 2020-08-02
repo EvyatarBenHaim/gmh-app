@@ -21,6 +21,7 @@ public class UserEntity {
     private String address;
     private String phoneNum;
     private String email;
+    private Boolean isAdmin = false;
     @JsonManagedReference
     @OneToMany(mappedBy = "userEntity" , targetEntity = ProductEntity.class, cascade = CascadeType.ALL)
     private List<ProductEntity> productList;
@@ -144,5 +145,13 @@ public class UserEntity {
                 ", emailAddress='" + email + '\'' +
                 ", productList=" + productList +
                 '}';
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }
