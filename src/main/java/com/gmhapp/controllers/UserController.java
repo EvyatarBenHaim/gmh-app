@@ -2,10 +2,12 @@ package com.gmhapp.controllers;
 
 import com.gmhapp.entities.UserEntity;
 import com.gmhapp.model.AuthInfo;
+import com.gmhapp.model.MailInfo;
 import com.gmhapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,5 +67,18 @@ public class UserController {
             return null;
         }
     }
+
+    @RequestMapping("/contactUs/{id}")
+    public void contactUs(@PathVariable int id,
+                          @RequestBody MailInfo mailInfo){
+        UserEntity userEntity = service.getUserById(id);
+        try {
+            service.sendEmail(mailInfo ,userEntity);
+        }
+        catch (MailException e){
+            e.printStackTrace();
+        }
+    }
+
 
 }
