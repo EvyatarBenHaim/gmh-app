@@ -81,21 +81,27 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/forgotPass/{id}")
-    public void forgotPassword(@PathVariable int id,
+    @RequestMapping("/forgotPass/{username}")
+    public void forgotPassword(@PathVariable String username,
                                @RequestBody ForgotPassInfo info){
-        UserEntity userEntity = service.getUserById(id);
+        UserEntity userEntity = service.getUserByName(username);
         try {
             service.validAnswer(info ,userEntity);
         }
         catch (ApiException e){
             e.printStackTrace();
+            throw e;
         }
     }
 
     @GetMapping("/questions")
-    public List<ValidationQuestions> getAllQuestions(){
+    public List<String> getAllQuestions(){
         return service.getAllValidationQuestions();
+    }
+
+    @GetMapping("/questions/{username}")
+    public String getQuestionByID(@PathVariable String username){
+        return '\"' + service.getUserByName(username).getValidationQuestion().getHebrew() + '\"';
     }
 
 
