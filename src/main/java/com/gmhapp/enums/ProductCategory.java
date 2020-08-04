@@ -11,7 +11,6 @@ public enum ProductCategory {
     BABYSITTER,
     HOSPITALITY;
 
-
     public static ProductCategory getProductCategory(String category) {
         for (ProductCategory p : ProductCategory.values()) {
             if (p.name().equals(category))

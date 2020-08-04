@@ -1,12 +1,13 @@
 package com.gmhapp.controllers;
 
 import com.gmhapp.entities.UserEntity;
+import com.gmhapp.enums.ValidationQuestions;
+import com.gmhapp.exception.ApiException;
 import com.gmhapp.model.AuthInfo;
+import com.gmhapp.model.ForgotPassInfo;
 import com.gmhapp.model.MailInfo;
 import com.gmhapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,6 +80,27 @@ public class UserController {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping("/forgotPass/{id}")
+    public void forgotPassword(@PathVariable int id,
+                               @RequestBody ForgotPassInfo info){
+        UserEntity userEntity = service.getUserById(id);
+        try {
+            service.validAnswer(info ,userEntity);
+        }
+        catch (ApiException e){
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/questions")
+    public List<ValidationQuestions> getAllQuestions(){
+        return service.getAllValidationQuestions();
+    }
+
+
+
+
 
 
 }

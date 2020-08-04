@@ -1,6 +1,7 @@
 package com.gmhapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.gmhapp.enums.ValidationQuestions;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,6 +22,8 @@ public class UserEntity {
     private String address;
     private String phoneNum;
     private String email;
+    private ValidationQuestions validationQuestion;
+    private String validationAnswer;
     private Boolean isAdmin = false;
     @JsonManagedReference
     @OneToMany(mappedBy = "userEntity" , targetEntity = ProductEntity.class, cascade = CascadeType.ALL)
@@ -109,6 +112,22 @@ public class UserEntity {
 
     public void setFavoritesList(List<ProductEntity> favoritesList) {
         this.favoritesList = favoritesList;
+    }
+
+    public ValidationQuestions getValidationQuestion() {
+        return validationQuestion;
+    }
+
+    public void setValidationQuestion(ValidationQuestions validationQuestion) {
+        this.validationQuestion = validationQuestion;
+    }
+
+    public String getValidationAnswer() {
+        return validationAnswer;
+    }
+
+    public void setValidationAnswer(String validationAnswer) {
+        this.validationAnswer = validationAnswer;
     }
 
     @Override

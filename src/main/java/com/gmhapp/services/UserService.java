@@ -1,7 +1,9 @@
 package com.gmhapp.services;
 
 import com.gmhapp.entities.UserEntity;
+import com.gmhapp.enums.ValidationQuestions;
 import com.gmhapp.exception.ApiException;
+import com.gmhapp.model.ForgotPassInfo;
 import com.gmhapp.model.MailInfo;
 import com.gmhapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import org.apache.log4j.Logger;
@@ -88,6 +91,32 @@ public class UserService {
         javaMailSender.send(mail);
         logger.info("email sent successfully.");
 
+    }
+
+    public void updatePassword(UserEntity userEntity, String newPass){
+        userEntity.setPassword(newPass);
+        repository.save(userEntity);
+        logger.info("The password of "+userEntity.getUserName()+
+                " changed successfully.");
+    }
+
+    public void validAnswer(ForgotPassInfo forgotPassInfo, UserEntity user){
+        String ques = user.getValidationQuestion().toString();
+        String ans = user.getValidationAnswer();
+
+        if(forgotPassInfo.getQuestion().equals(ques)&
+           forgotPassInfo.getAnswer().equals(ans))
+            updatePassword(user,forgotPassInfo.getNewPass());
+
+        else
+        throw new ApiException("wrong answer or question!", HttpStatus.CONFLICT);
+
+    }
+
+    public List<ValidationQuestions> getAllValidationQuestions(){
+        List<ValidationQuestions> validationQuestions = Arrays.asList(ValidationQuestions.values());
+        logger.info("Get validationQuestions successfully: " + validationQuestions);
+        return validationQuestions;
     }
 
     public UserEntity updateUser(UserEntity userEntity){
