@@ -71,6 +71,7 @@ public class ProductService {
         return categories;
     }
 
+
     public ProductEntity getProductById(int id){
         ProductEntity productEntity =  repository.findById(id).orElse(null);
         if(Objects.isNull(productEntity))
