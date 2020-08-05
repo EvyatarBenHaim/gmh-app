@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @GetMapping("/categories")
-    public List<ProductCategory> getAllCategories(){
+    public List<String> getAllCategories(){
         return service.getAllCategories();
     }
 
