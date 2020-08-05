@@ -3,6 +3,7 @@ package com.gmhapp.services;
 import com.gmhapp.entities.ProductEntity;
 import com.gmhapp.enums.ProductCategory;
 import com.gmhapp.entities.UserEntity;
+import com.gmhapp.enums.ValidationQuestions;
 import com.gmhapp.exception.ApiException;
 import com.gmhapp.repositories.ProductRepository;
 import org.apache.log4j.Logger;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -63,8 +65,8 @@ public class ProductService {
         return repository.findAll();
     }
 
-    public List<ProductCategory> getAllCategories(){
-        List<ProductCategory> categories = Arrays.asList(ProductCategory.values());
+    public List<String> getAllCategories(){
+        List<String> categories = Arrays.stream(ProductCategory.values()).map(ProductCategory::getHebrew).collect(Collectors.toList());
         logger.info("Get products categories successfully: " + categories);
         return categories;
     }
