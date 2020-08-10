@@ -1,16 +1,15 @@
 package com.gmhapp;
 
+import com.gmhapp.repositories.ProductRepository;
 import com.gmhapp.services.FilesStorageService;
-import com.gmhapp.services.ProductService;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.Date;
 
 
 @SpringBootApplication

@@ -78,6 +78,7 @@ public class UserController {
         }
         catch (MailException e){
             e.printStackTrace();
+            throw e;
         }
     }
 
@@ -102,6 +103,11 @@ public class UserController {
     @GetMapping("/questions/{username}")
     public String getQuestionByID(@PathVariable String username){
         return '\"' + service.getUserByName(username).getValidationQuestion().getHebrew() + '\"';
+    }
+
+    @GetMapping("/totalUsers")
+    public int howMuchUsers(){
+        return service.getTotalUsers();
     }
 
 

@@ -119,6 +119,10 @@ public class UserService {
         return validationQuestions;
     }
 
+    public int getTotalUsers(){
+        return repository.countAllByIdIsNotNull();
+    }
+
     public UserEntity updateUser(UserEntity userEntity) {
         UserEntity existingUserEntity = repository.findById(userEntity.getId()).orElse(null);
         existingUserEntity.setUserName(userEntity.getfName());

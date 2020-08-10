@@ -22,4 +22,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     boolean existsById(int id);
 
+    int countAllByIdIsNotNull();
+
 }

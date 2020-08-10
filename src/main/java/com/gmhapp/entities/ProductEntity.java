@@ -17,7 +17,7 @@ public class ProductEntity {
     @GeneratedValue
     private int id;
     private String name;
-    private ProductCategory category;
+    private String category;
     private double price;
     private String description;
     private String location;
@@ -54,11 +54,11 @@ public class ProductEntity {
         this.name = name;
     }
 
-    public ProductCategory getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(ProductCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -134,7 +134,7 @@ public class ProductEntity {
         return id == product.id &&
                 price == product.price &&
                 Objects.equals(name, product.name) &&
-                category == product.category &&
+                category.equals(product.category)  &&
                 Objects.equals(description, product.description) &&
                 Objects.equals(location, product.location) &&
                 Objects.equals(pictureLink, product.pictureLink) &&

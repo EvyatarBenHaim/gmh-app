@@ -77,6 +77,11 @@ public class ProductController {
         return service.getAllProductsByCategory(category);
     }
 
+    @GetMapping("/totalProducts")
+    public int howMuchProducts(){
+        return service.getTotalProducts();
+    }
+
     @PutMapping("/updateProduct")
     public ProductEntity updateProduct(@RequestBody ProductEntity product){
         return service.updateProduct(product);

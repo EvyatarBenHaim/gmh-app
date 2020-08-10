@@ -62,7 +62,7 @@ public class ProductService {
     }
 
     public List<ProductEntity> getProducts(){
-        return repository.findAll();
+          return  repository.findAll();
     }
 
     public List<String> getAllCategories(){
@@ -95,6 +95,10 @@ public class ProductService {
         repository.deleteById(id);
         logger.debug("Product ID: "+id+" removed successfully.");
         return "Product ID:"+id+" removed successfully.";
+    }
+
+    public int getTotalProducts(){
+        return repository.countAllByIdIsNotNull();
     }
 
     public ProductEntity updateProduct(ProductEntity product){
