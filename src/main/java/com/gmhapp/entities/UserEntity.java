@@ -1,5 +1,6 @@
 package com.gmhapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gmhapp.enums.ValidationQuestions;
 
@@ -25,7 +26,7 @@ public class UserEntity {
     private ValidationQuestions validationQuestion;
     private String validationAnswer;
     private Boolean isAdmin = false;
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "userEntity" , targetEntity = ProductEntity.class, cascade = CascadeType.ALL)
     private List<ProductEntity> productList;
     @ManyToMany(mappedBy = "users")

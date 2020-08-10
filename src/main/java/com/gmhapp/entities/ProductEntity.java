@@ -1,5 +1,6 @@
 package com.gmhapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gmhapp.enums.ProductCategory;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +24,7 @@ public class ProductEntity {
     private String pictureLink;
     private String additionalComments;
     private Date dateAdded;
-    @JsonBackReference
+    @JsonIgnoreProperties(value={"productList","favoritesList"})
     @ManyToOne
     @JoinColumn(name = "u_fk", referencedColumnName = "id" )
     private UserEntity userEntity;
