@@ -26,7 +26,13 @@ public class UserController {
 
     @PostMapping("/addUser")
     public UserEntity addUser(@RequestBody UserEntity userEntity) {
-        return service.saveUsers(userEntity);
+        try {
+            return service.saveUsers(userEntity);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
     }
 
     @PostMapping("/addUsers")
@@ -41,22 +47,42 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public UserEntity findUserById(@PathVariable int id) {
-        return service.getUserById(id);
+        try {
+            return service.getUserById(id);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @GetMapping("/findUser/{userName}")
     public UserEntity findUserByName(@PathVariable String userName) {
-        return service.getUserByName(userName);
+        try {
+            return service.getUserByName(userName);
+        } catch (ApiException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @PutMapping("/updateUser")
     public UserEntity updateUser(@RequestBody UserEntity userEntity) {
-        return service.updateUser(userEntity);
+        try {
+            return service.updateUser(userEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @DeleteMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable int id) {
-        return service.deleteUser(id);
+        try {
+            return service.deleteUser(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @PostMapping("/auth")

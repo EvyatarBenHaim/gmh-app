@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             "lower(u.email) like lower(:email)")
     boolean existsUserEntityByEmail(@Param("email") String email);
 
+    boolean existsUserEntityById(int id);
+
     int countAllByIdIsNotNull();
 
 

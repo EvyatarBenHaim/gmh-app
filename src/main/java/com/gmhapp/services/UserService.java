@@ -75,9 +75,16 @@ public class UserService {
     }
 
     public String deleteUser(int id) {
-        repository.deleteById(id);
-        logger.debug("User ID: " + id + "removed successfully.");
-        return "User ID:" + id + " removed successfully.";
+        if (repository.existsUserEntityById(id)){
+            repository.deleteById(id);
+            logger.debug("User ID: " + id + "removed successfully.");
+            return "User ID:" + id + " removed successfully.";
+        }
+
+        logger.error("The ID " + id + " not found!");
+        throw new ApiException("The ID " + id +
+                " not found!", HttpStatus.NOT_FOUND);
+
     }
 
     public void sendEmail(MailInfo mailInfo, UserEntity user) throws MailException {
@@ -125,16 +132,20 @@ public class UserService {
 
     public UserEntity updateUser(UserEntity userEntity) {
         UserEntity existingUserEntity = repository.findById(userEntity.getId()).orElse(null);
-        existingUserEntity.setUserName(userEntity.getfName());
-        existingUserEntity.setPassword(userEntity.getPassword());
-        existingUserEntity.setfName(userEntity.getfName());
-        existingUserEntity.setlName(userEntity.getlName());
-        existingUserEntity.setAddress(userEntity.getAddress());
-        existingUserEntity.setPhoneNum(userEntity.getPhoneNum());
-        existingUserEntity.setEmail(userEntity.getEmail());
-        existingUserEntity.getProductList().addAll(userEntity.getProductList());
-        logger.debug("User id " + userEntity.getId() + " successfully updated.");
-        return repository.save(existingUserEntity);
+        if(Objects.nonNull(existingUserEntity)){
+            existingUserEntity.setUserName(userEntity.getfName());
+            existingUserEntity.setPassword(userEntity.getPassword());
+            existingUserEntity.setfName(userEntity.getfName());
+            existingUserEntity.setlName(userEntity.getlName());
+            existingUserEntity.setAddress(userEntity.getAddress());
+            existingUserEntity.setPhoneNum(userEntity.getPhoneNum());
+            existingUserEntity.setEmail(userEntity.getEmail());
+            existingUserEntity.getProductList().addAll(userEntity.getProductList());
+            logger.debug("User id " + userEntity.getId() + " successfully updated.");
+            return repository.save(existingUserEntity);
+        }
+        throw new ApiException("The UserId not found , the ID is:"+userEntity.getId(), HttpStatus.NOT_FOUND);
+
     }
 
 

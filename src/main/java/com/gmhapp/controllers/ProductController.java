@@ -53,7 +53,12 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public ProductEntity findProductById(@PathVariable int id){
-        return service.getProductById(id);
+        try {
+            return service.getProductById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @GetMapping("/myProducts/{userId}")
@@ -84,7 +89,13 @@ public class ProductController {
 
     @PutMapping("/updateProduct")
     public ProductEntity updateProduct(@RequestBody ProductEntity product){
-        return service.updateProduct(product);
+        try {
+            return service.updateProduct(product);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
     }
 
     @DeleteMapping("/deleteProduct/{id}")
