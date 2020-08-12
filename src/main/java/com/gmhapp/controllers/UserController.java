@@ -8,6 +8,7 @@ import com.gmhapp.model.ForgotPassInfo;
 import com.gmhapp.model.MailInfo;
 import com.gmhapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,7 +92,7 @@ public class UserController {
         if (user.getPassword().equals(authInfo.getPassword())) {
             return user;
         } else {
-            return null;
+            throw new ApiException("אחד מהפרטים שהזנת אינם נכונים", HttpStatus.FORBIDDEN);
         }
     }
 

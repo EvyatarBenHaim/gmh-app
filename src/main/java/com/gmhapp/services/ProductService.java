@@ -108,7 +108,9 @@ public class ProductService {
             existingProduct.setCategory(product.getCategory());
             existingProduct.setDescription(product.getDescription());
             existingProduct.setLocation(product.getLocation());
-            existingProduct.setPictureLink(product.getPictureLink());
+            if(product.getPictureLink() != null) {
+                existingProduct.setPictureLink(product.getPictureLink());
+            }
             existingProduct.setAdditionalComments(product.getAdditionalComments());
             existingProduct.setPrice(product.getPrice());
             logger.debug("Product id "+product.getId()+" successfully updated.");

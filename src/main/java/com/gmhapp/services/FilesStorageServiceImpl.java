@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 
@@ -54,7 +55,7 @@ public class FilesStorageServiceImpl implements FilesStorageService{
            mimeType.equals("image/png")){
            try {
                String picName = pid+"."+mimeType.substring(6);
-               Files.copy(file.getInputStream(), this.root.resolve(picName));
+               Files.copy(file.getInputStream(), this.root.resolve(picName), StandardCopyOption.REPLACE_EXISTING);
                productEntity.setPictureLink(picName);
                repository.save(productEntity);
            } catch (Exception e) {
