@@ -21,7 +21,12 @@ public class ProductController {
     @PostMapping("/addProduct/{userId}")
     public ProductEntity addProduct(@RequestBody ProductEntity product
             , @PathVariable int userId){
-        return service.saveProduct(product,userId);
+        try {
+            return service.saveProduct(product,userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @PostMapping("/addProducts")

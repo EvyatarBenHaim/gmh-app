@@ -37,13 +37,13 @@ public class UserService {
         if (repository.existsUserEntityByUserName(userEntity.getUserName())) {
             logger.error("The username " + userEntity.getUserName() + " already " +
                     "exists in the system!");
-            throw new ApiException("The username " + userEntity.getUserName() +
-                    " already exists!. Try another one.", HttpStatus.CONFLICT);
+            throw new ApiException("שם המשתמש " + userEntity.getUserName() +
+                    " שבחרת תפוס! נסה שם אחר.", HttpStatus.CONFLICT);
         } else if (repository.existsUserEntityByEmail(userEntity.getEmail())) {
             logger.error("The email address " + userEntity.getEmail() + " already " +
                     "exists in the system !");
-            throw new ApiException("The email address " + userEntity.getEmail() +
-                    " already exists!. Try another one.", HttpStatus.CONFLICT);
+            throw new ApiException("המייל " + userEntity.getEmail() +
+                    " שהזנת קיים במערכת!", HttpStatus.CONFLICT);
         }
         logger.debug("UserName " + userEntity.getUserName() + " successfully added.");
         return repository.save(userEntity);

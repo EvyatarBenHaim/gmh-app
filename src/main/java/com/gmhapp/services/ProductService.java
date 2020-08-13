@@ -32,6 +32,13 @@ public class ProductService {
     }
 
     public ProductEntity saveProduct(ProductEntity product , int uesrId){
+        if(Objects.isNull(product.getCategory())||
+           Objects.isNull(product.getDescription())||
+           Objects.isNull(product.getLocation())||
+           Objects.isNull(product.getName())
+        )
+            throw new ApiException("אנא הזן את כל הפרטים הנדרשים!",HttpStatus.CONFLICT);
+
         UserEntity userEntity = userService.getUserById(uesrId);
         product.setUserEntity(userEntity);
         product.setDateAdded(Calendar.getInstance().getTime());
