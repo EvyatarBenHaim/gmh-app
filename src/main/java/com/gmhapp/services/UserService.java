@@ -70,8 +70,8 @@ public class UserService {
             return repository.findByUserName(userName);
 
         logger.error("The username " + userName + " not found!");
-        throw new ApiException("The username " + userName +
-                " not found!", HttpStatus.NOT_FOUND);
+        throw new ApiException("שם המשתמש " + userName +
+                " לא קיים במערכת!", HttpStatus.NOT_FOUND);
     }
 
     public String deleteUser(int id) {
@@ -92,8 +92,8 @@ public class UserService {
         mail.setTo("gmhapplication@gmail.com");
         //mail.setFrom(user.getEmail());
         mail.setSubject(mailInfo.getSubject());
-        mail.setText("message from- " + user.getfName() + " " + user.getlName() +
-                " about " + mailInfo.getSubject() + ":" + "\n" +
+        mail.setText("הודעה מאת- " + user.getfName() + " " + user.getlName() +
+                " בנושא " + mailInfo.getSubject() + ":" + "\n" +
                 mailInfo.getText());
 
         javaMailSender.send(mail);
