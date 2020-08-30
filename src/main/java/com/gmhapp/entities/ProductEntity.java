@@ -18,7 +18,6 @@ public class ProductEntity {
     private int id;
     private String name;
     private String category;
-    private double price;
     private String description;
     private String location;
     private String pictureLink;
@@ -60,14 +59,6 @@ public class ProductEntity {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String getDescription() {
@@ -132,7 +123,6 @@ public class ProductEntity {
         if (o == null || getClass() != o.getClass()) return false;
         ProductEntity product = (ProductEntity) o;
         return id == product.id &&
-                price == product.price &&
                 Objects.equals(name, product.name) &&
                 category.equals(product.category)  &&
                 Objects.equals(description, product.description) &&
@@ -143,7 +133,7 @@ public class ProductEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, price, description, location, pictureLink, additionalComments);
+        return Objects.hash(id, name, category, description, location, pictureLink, additionalComments);
     }
 
     @Override
@@ -152,7 +142,6 @@ public class ProductEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", category=" + category +
-                ", price=" + price +
                 ", description='" + description + '\'' +
                 ", location='" + location + '\'' +
                 ", pictureLink='" + pictureLink + '\'' +

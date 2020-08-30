@@ -119,7 +119,6 @@ public class ProductService {
                 existingProduct.setPictureLink(product.getPictureLink());
             }
             existingProduct.setAdditionalComments(product.getAdditionalComments());
-            existingProduct.setPrice(product.getPrice());
             logger.debug("Product id "+product.getId()+" successfully updated.");
             return repository.save(existingProduct);
         }
