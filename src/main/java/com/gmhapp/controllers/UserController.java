@@ -103,7 +103,7 @@ public class UserController {
         try {
             service.sendEmail(mailInfo ,userEntity);
         }
-        catch (MailException e){
+        catch (Exception e){
             e.printStackTrace();
             throw e;
         }

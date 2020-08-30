@@ -90,14 +90,22 @@ public class UserService {
     public void sendEmail(MailInfo mailInfo, UserEntity user) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo("gmhapplication@gmail.com");
-        //mail.setFrom(user.getEmail());
         mail.setSubject(mailInfo.getSubject());
-        mail.setText("הודעה מאת- " + user.getfName() + " " + user.getlName() +
-                " בנושא " + mailInfo.getSubject() + ":" + "\n" +
-                mailInfo.getText());
-
-        javaMailSender.send(mail);
-        logger.info("email sent successfully.");
+        mail.setText(mailInfo.getText());
+        //mail.setFrom(user.getEmail());
+        if(Objects.isNull(mail.getSubject())||
+                Objects.isNull(mail.getText())||
+                mail.getSubject().length()<7||
+                mail.getText().length()<10) {
+            logger.error("The subject or text is invalid!");
+            throw new ApiException("הודעה חייבת להכיל נושא עם 7 תווים לפחות, וטקסט עם 10 תווים לפחות.", HttpStatus.CONFLICT);
+        }
+        else {
+            mail.setText("הודעה מאת- " + user.getfName() + " " + user.getlName() +
+                    " בנושא " + mailInfo.getSubject() + ":" + "\n" +
+                    mailInfo.getText());
+            javaMailSender.send(mail);
+            logger.info("email sent successfully.");}
 
     }
 
